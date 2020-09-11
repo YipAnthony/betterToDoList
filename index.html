@@ -3,9 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
+    <div id="projectContainer">
+        <div id="topbar"></div>
+        <div id="sidebar"></div>
+        <div id="diplaySection">
+            <div id="taskDisplayContainer">
+                <div id="topRowTitle">Temp title</div>
+                <div id="userTaskContainer">
+                    <li class="userTask">
+                        <div class="taskDescription">blah blah blah</div>
+                    </li>
+                    <li class="addTaskButton">
+                        <img src="images/add.svg" alt="">
+                        <div class="taskDescription">Add Task</div>
+                    </li>
+                    <form id="addTaskFormContainer">
+                        <div id="addTaskTopBox">
+                            <textarea name="message" placeholder="e.g. fold laundry at 4pm"></textarea>
+                            <div id="dueDate">Due Date</div>
+                        </div>
+                        <div id="addTaskBottomRow">
+                            <img src="images/checkmark.svg" alt="">
+                            <img src="images/cancel.svg" alt="">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>
