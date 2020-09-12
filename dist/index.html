@@ -32,10 +32,10 @@
                     <li class="userTask">
                         <div class="taskDescription">blah blah blah</div>
                     </li>
-                    <li class="addTaskButton">
+                    <!-- <li class="addTaskButton">
                         <img src="images/add.svg" alt="">
                         <div class="taskDescription">Add Task</div>
-                    </li>
+                    </li> -->
                     <!-- <form id="addTaskFormContainer">
                         <div id="addTaskTopBox">
                             <textarea name="message" placeholder="e.g. fold laundry at 4pm"></textarea>
@@ -55,13 +55,14 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="bootstrap-datepicker.js"></script>
+    <script src="main.js"></script>
     <script>
-        $('#addTaskTopBox #dueDate').datepicker({
+        $('#dueDate').datepicker({
             todayBtn: "linked",
             keyboardNavigation: false,
             todayHighlight: true
         });
     </script>
-    <script src="main.js"></script>
+    
 </body>
 </html>
