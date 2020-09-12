@@ -15,6 +15,47 @@ body{
 body li{
     list-style-type: none;
 }
+
+#sidebarContentContainer {
+    width: 250px;
+    height: 90%;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#sidebarContentContainer #sidebarHomeTab,
+#sidebarContentContainer #sidebarCalendarTab {
+    font-size: 22px;
+    font-weight: bold;
+    /* line-height: 100%; */
+    margin: 10px 10px 10px;
+}
+
+#sidebarContentContainer #sidebarProjectsTab {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 100%;
+    margin: 10px 10px 10px;
+}
+
+#sidebarContentContainer #sidebarProjectsTab #sidebarUserProjects
+div {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 100%;
+    margin: 10px 0px 10px 20px;
+}
+
+#sidebarContentContainer #sidebarHomeTab:hover,
+#sidebarContentContainer #sidebarCalendarTab:hover,
+#sidebarContentContainer #sidebarProjectsTab #sidebarUserProjects
+div:hover {
+    background-color: var(--primary-light-shade);
+    cursor: pointer;
+} 
+
 #projectContainer {
     height: 100vh;
     width: 100vw;
@@ -41,7 +82,7 @@ body li{
 }
 
 #projectContainer #diplaySection #taskDisplayContainer {
-    background-color: var(--primary-light-shade);
+    background-color: none;
     width: 800px;
     height: 90%;
     margin: 50px auto;
@@ -72,8 +113,8 @@ body li{
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
     /* change color later */
-    border-top: var(--secondary-accent) 1px solid;
-    border-bottom: var(--secondary-accent) 1px solid;
+    border-top: var(--primary-light-shade) 1px solid;
+    border-bottom: var(--primary-light-shade)  1px solid;
 }
 
 #projectContainer #diplaySection #taskDisplayContainer 
@@ -117,8 +158,6 @@ body li{
 #userTaskContainer #addTaskFormContainer {
     min-height: 165px;
     width: 100%;
-    /* change color later */
-    background-color: var(--secondary-lighest-shade);
 }
 
 #projectContainer #diplaySection #taskDisplayContainer 
@@ -127,14 +166,16 @@ body li{
     width: auto;
     margin: 10px;
     border-radius: 10px;
-    border: var(--secondary-accent) solid 1px;
+    border: var(--primary-accent) solid 1px;
     display: grid;
     grid-template-rows: auto 40px;
+    grid-template-columns: 110px auto ;
 } 
 
 #projectContainer #diplaySection #taskDisplayContainer 
 #userTaskContainer #addTaskTopBox textarea{
     grid-row: 1/2;
+    grid-column: 1/3;
     min-height: 65px;
     width: 95%;
     padding: 10px;
@@ -146,16 +187,22 @@ body li{
 } 
 
 #projectContainer #diplaySection #taskDisplayContainer 
-#userTaskContainer #addTaskTopBox #dueDate {
+#userTaskContainer #addTaskTopBox #dueDate, #inputProject {
     grid-row: 2/3;
-    width: 80px;
+    width: 100px;
+    height: 30px;
     margin:auto;
     margin-left: 10px;
     line-height: 100%;
     text-align: center;
-    padding: 5px;
+    padding: 0px;
     border-radius: 5px;
     border: var(--primary-accent) 1px solid;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer #addTaskTopBox #inputProject {
+    width: 150px;
 }
 
 #projectContainer #diplaySection #taskDisplayContainer 

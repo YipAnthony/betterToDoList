@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap-datepicker3.standalone.css">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
     <div id="projectContainer">
         <div id="topbar"></div>
-        <div id="sidebar"></div>
+        <div id="sidebar">
+            <div id="sidebarContentContainer">
+                <li id="sidebarHomeTab">Home</li>
+                <li id="sidebarCalendarTab">Calendar</li>
+                <li id="sidebarProjectsTab">
+                    <div id="sidebarProjectsTitle">Projects</div>
+                    <div id="sidebarUserProjects">
+                        <div>proj 1</div>
+                        <div>proj 2</div>
+                    </div>
+                </li>
+
+            </div>
+        </div>
         <div id="diplaySection">
             <div id="taskDisplayContainer">
                 <div id="topRowTitle">Temp title</div>
@@ -21,21 +36,32 @@
                         <img src="images/add.svg" alt="">
                         <div class="taskDescription">Add Task</div>
                     </li>
-                    <form id="addTaskFormContainer">
+                    <!-- <form id="addTaskFormContainer">
                         <div id="addTaskTopBox">
                             <textarea name="message" placeholder="e.g. fold laundry at 4pm"></textarea>
-                            <div id="dueDate">Due Date</div>
+                            <input type="text" id="dueDate" placeholder="Due Date" autocomplete="off" class="form-control">
+                            <input type="text" id="inputProject" placeholder="Project Name" autocomplete="off" class="form-control">
                         </div>
                         <div id="addTaskBottomRow">
                             <img src="images/checkmark.svg" alt="">
                             <img src="images/cancel.svg" alt="">
                         </div>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="bootstrap-datepicker.js"></script>
+    <script>
+        $('#addTaskTopBox #dueDate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            todayHighlight: true
+        });
+    </script>
     <script src="main.js"></script>
 </body>
 </html>
