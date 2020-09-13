@@ -1,3 +1,5 @@
+import {isToday, toDate, isThisWeek} from 'date-fns'
+
 let toDoList = (() => {
 
     const taskFactoryFunc = (description, dueDate, project, completion, filter) => {
@@ -10,7 +12,7 @@ let toDoList = (() => {
     const addItemsToHashMap = (projectName) => {
         if (projectName == "") return
         else if (projectHashMap.has(projectName)){
-            value = projectHashMap.get(projectName);
+            let value = projectHashMap.get(projectName);
             value += 1;
             projectHashMap.set(projectName, value)
         }
@@ -21,7 +23,7 @@ let toDoList = (() => {
 
     const removeItemsToHashMap = (projectName) => {
         if (projectHashMap.has(projectName)){
-            value = projectHashMap.get(projectName);
+            let value = projectHashMap.get(projectName);
             value -= 1;
             projectHashMap.set(projectName, value)
         }
@@ -31,12 +33,19 @@ let toDoList = (() => {
     }
 
     const filteredArray = (targetProject) => {
-        for (let i = 0; i < taskArray.length; i++) {
-            if (taskArray[i].project == targetProject){
+        if (targetProject == "sidebarHomeTab") {
+            for (let i = 0; i < taskArray.length; i++) {
                 taskArray[i].filter = "yes"
-            }
-            else {
-                taskArray[i].filter = ""
+            } 
+        }
+        else {
+            for (let i = 0; i < taskArray.length; i++) {
+                if (taskArray[i].project == targetProject){
+                    taskArray[i].filter = "yes"
+                }
+                else {
+                    taskArray[i].filter = ""
+                }
             }
         }
     } 
@@ -45,7 +54,60 @@ let toDoList = (() => {
         let selectedProject = e.target.id
         filteredArray(selectedProject)
         refreshTaskContainer(taskArray)
+        let tabTitle = document.querySelector('#topRowTitle')
+        if (selectedProject == "sidebarHomeTab") {
+            tabTitle.innerHTML = "Home"
+        } else {
+            tabTitle.innerHTML = selectedProject
+        }
     }
+
+    let homeTab = document.querySelector('#sidebarHomeTab')
+    homeTab.addEventListener('click', filterProjectTab)
+
+    function filterTodayTasks() {
+        for (let i = 0; i < taskArray.length; i++) {
+            let formattedDate = toDate(new Date(taskArray[i].dueDate))
+            if (isToday(formattedDate)) {
+                taskArray[i].filter = "yes"
+            }
+            else {
+                taskArray[i].filter = ""
+            }
+        }   
+    }
+
+    function filterWeekTasks() {
+        for (let i = 0; i < taskArray.length; i++) {
+            let formattedDate = toDate(new Date(taskArray[i].dueDate))
+            if (isThisWeek(formattedDate)) {
+                taskArray[i].filter = "yes"
+            }
+            else {
+                taskArray[i].filter = ""
+            }
+        }   
+    }
+
+    function clickToday(e) {
+        filterTodayTasks();
+        refreshTaskContainer(taskArray)
+        let tabTitle = document.querySelector('#topRowTitle')
+        tabTitle.innerHTML = "Today"
+    }
+
+    function clickWeek() {
+        filterWeekTasks();
+        refreshTaskContainer(taskArray)
+        let tabTitle = document.querySelector('#topRowTitle')
+        tabTitle.innerHTML = "Today"
+    }
+
+    let todayTab = document.querySelector('#sidebarCalendarTab')
+    todayTab.addEventListener('click', clickToday)
+    let weekTab = document.querySelector('#sidebarWeekTab')
+    weekTab.addEventListener('click', clickWeek)
+
     let createProjectItem = (projectName, taskNumberInput) => {
         let mainProjectsTab = document.querySelector('#sidebarUserProjects')
 
@@ -58,7 +120,7 @@ let toDoList = (() => {
         projectDisplayName.setAttribute('class', "projectName")
         projectDisplayName.innerHTML = projectName
 
-        userProject.appendChild(projectDisplayName)
+       
 
         let taskNumberContainer = document.createElement('div')
         taskNumberContainer.setAttribute('class', 'taskNumberContainer')
@@ -70,6 +132,7 @@ let toDoList = (() => {
         taskNumberContainer.appendChild(taskNumber)
 
         userProject.appendChild(taskNumberContainer)
+        userProject.appendChild(projectDisplayName)
 
         mainProjectsTab.appendChild(userProject)
         
@@ -231,9 +294,9 @@ let toDoList = (() => {
         addTaskFormContainer.appendChild(addTaskBottomRow)
 
         const getUserData = () => {
-            getUserDescription = userDescriptionArea.value
-            getUserDueDate = datePicker.value
-            getProjectName = projectName.value
+            let getUserDescription = userDescriptionArea.value
+            let getUserDueDate = datePicker.value
+            let getProjectName = projectName.value
             return{
                 getUserDescription,
                 getUserDueDate,
