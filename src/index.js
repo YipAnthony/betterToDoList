@@ -1,18 +1,189 @@
 let toDoList = (() => {
 
-    const taskFactoryFunc = (description, dueDate, project, priority, completion) => {
-        // const completion = "",
-        return {description, dueDate, project, completion};
+    const taskFactoryFunc = (description, dueDate, project, completion, filter) => {
+        return {description, dueDate, project, completion, filter};
     }
-    let task = taskFactoryFunc("testestest", "1/1/2020", "projecttest", "high","")
-
+ 
     const taskArray = [];
-    
-    const pushTaskObjtoArray = (createdTask) => {
-        taskArray.push(createdTask)
+    const projectHashMap = new Map();
+
+    const addItemsToHashMap = (projectName) => {
+        if (projectName == "") return
+        else if (projectHashMap.has(projectName)){
+            value = projectHashMap.get(projectName);
+            value += 1;
+            projectHashMap.set(projectName, value)
+        }
+        else {
+            projectHashMap.set(projectName, 1)
+        }
     }
 
+    const removeItemsToHashMap = (projectName) => {
+        if (projectHashMap.has(projectName)){
+            value = projectHashMap.get(projectName);
+            value -= 1;
+            projectHashMap.set(projectName, value)
+        }
+        if (projectHashMap.get(projectName) == 0) {
+            projectHashMap.delete(projectName)
+        }
+    }
 
+    const filteredArray = (targetProject) => {
+        for (let i = 0; i < taskArray.length; i++) {
+            if (taskArray[i].project == targetProject){
+                taskArray[i].filter = "yes"
+            }
+            else {
+                taskArray[i].filter = ""
+            }
+        }
+    } 
+
+    function filterProjectTab(e) {
+        let selectedProject = e.target.id
+        filteredArray(selectedProject)
+        refreshTaskContainer(taskArray)
+    }
+    let createProjectItem = (projectName, taskNumberInput) => {
+        let mainProjectsTab = document.querySelector('#sidebarUserProjects')
+
+        let userProject = document.createElement('div')
+        userProject.setAttribute('id', projectName)
+        userProject.setAttribute('class', 'userProject')
+        userProject.addEventListener('click', filterProjectTab)
+
+        let projectDisplayName = document.createElement('div')
+        projectDisplayName.setAttribute('class', "projectName")
+        projectDisplayName.innerHTML = projectName
+
+        userProject.appendChild(projectDisplayName)
+
+        let taskNumberContainer = document.createElement('div')
+        taskNumberContainer.setAttribute('class', 'taskNumberContainer')
+
+        let taskNumber = document.createElement('div')
+        taskNumber.setAttribute('class', 'taskNumber')
+        taskNumber.innerHTML = taskNumberInput
+
+        taskNumberContainer.appendChild(taskNumber)
+
+        userProject.appendChild(taskNumberContainer)
+
+        mainProjectsTab.appendChild(userProject)
+        
+    }
+
+    let genereateProjectTabsFromHashMap = () => {
+        const mapKeyIterator = projectHashMap.keys()
+        const mapValueIterator = projectHashMap.values()
+        const mapIterator = projectHashMap[Symbol.iterator]()
+        for (const item of mapIterator){
+            createProjectItem(mapKeyIterator.next().value, mapValueIterator.next().value)
+        }
+    }
+
+    const clearProjectsPanel = () => {
+        let container = document.querySelector('#sidebarUserProjects')
+        clearAllChildNodes(container)
+    }
+
+    const refreshProjectsPanel = () => {
+        clearProjectsPanel();
+        genereateProjectTabsFromHashMap();
+    }
+
+    let generateTask = (taskDetails, dueDate) => {
+        const userTask = document.createElement('li')
+        userTask.setAttribute('class', "userTask")
+
+        const taskDescription = document.createElement('div')
+        taskDescription.setAttribute('class', 'taskDescription')
+        taskDescription.innerHTML = taskDetails
+
+        const taskDueDate = document.createElement('div')
+        taskDueDate.setAttribute('class', 'taskDueDate')
+        taskDueDate.innerHTML = dueDate
+
+        const emptyBox = document.createElement('img')
+        emptyBox.src = "images/checkboxEmpty.svg"
+        emptyBox.setAttribute('class', 'emptyCheckBox')
+
+        const checkedBox = document.createElement('img')
+        checkedBox.src = "images/checkbox.svg"
+        checkedBox.setAttribute('class', 'checkedBox')
+
+        const deleteIcon = document.createElement('img')
+        deleteIcon.src = "images/delete.svg"
+        deleteIcon.setAttribute('class', 'deleteIcon')
+
+        
+        userTask.appendChild(emptyBox)
+        userTask.appendChild(taskDescription)
+        userTask.appendChild(taskDueDate)
+        userTask.appendChild(deleteIcon)
+
+        const toggleCheckbox = (e) => {
+            if (e.target == emptyBox) {
+                userTask.removeChild(emptyBox)
+                userTask.insertBefore(checkedBox, taskDescription)
+                userTask.classList.add('checked')
+            }
+            else if (e.target == checkedBox) {
+                userTask.removeChild(checkedBox)
+                userTask.insertBefore(emptyBox, taskDescription)
+                userTask.classList.remove('checked')
+            }
+        }
+        emptyBox.addEventListener('click', toggleCheckbox)
+        checkedBox.addEventListener('click', toggleCheckbox)
+
+        const deleteTask = (e) => {
+            taskArray[userTask.id].description = "";
+            
+            refreshTaskContainer(taskArray);
+            console.log(taskArray[userTask.id].project)
+
+            removeItemsToHashMap(taskArray[userTask.id].project)
+            taskArray[userTask.id].project = ""
+            refreshProjectsPanel();
+        }
+        deleteIcon.addEventListener('click', deleteTask)
+            
+        return {
+            userTask,
+            
+        }
+    }
+
+    let appendTask = (task) => {
+        let container = document.querySelector('#userTaskContainer')
+        container.appendChild(task)
+    }
+
+    const clearAllChildNodes = (parentNode) => {
+        while (parentNode.firstElementChild) {
+            parentNode.removeChild(parentNode.firstElementChild);
+        }
+    }
+
+    let generateArray = (array) => {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].description != "" && array[i].filter == "yes"){
+                let task = generateTask(array[i].description, array[i].dueDate).userTask
+                task.setAttribute('id', `${i}`)
+                appendTask(task);
+            }
+        }
+    }
+
+    let refreshTaskContainer = (array) => {
+        let container = document.querySelector('#userTaskContainer')
+        clearAllChildNodes(container);
+        generateArray(array);
+        addAddTaskToDocument('userTaskContainer');
+    }
     //Function to create task form
     let createInputForm = () => {
         const addTaskFormContainer = document.createElement('form')
@@ -24,6 +195,7 @@ let toDoList = (() => {
         const userDescriptionArea = document.createElement('textarea')
         userDescriptionArea.setAttribute('name', "message")
         userDescriptionArea.setAttribute('placeholder', "e.g. fold laundry at 4pm")
+        userDescriptionArea.setAttribute('required', 'true')
     
         const datePicker = document.createElement('input')
         datePicker.setAttribute('type', 'text')
@@ -69,7 +241,15 @@ let toDoList = (() => {
             }
         }
         const pushFormDataToArray = (dataObject) => {
-            taskArray.push(dataObject)
+            
+            let task = taskFactoryFunc(
+                dataObject.getUserDescription, 
+                dataObject.getUserDueDate,
+                dataObject.getProjectName,
+                "",
+                "yes"
+            )
+            taskArray.push(task)
         }
         
         const clearFormData = () => {
@@ -80,13 +260,18 @@ let toDoList = (() => {
         
         checkmark.addEventListener('click', clickSubmit)
         function clickSubmit(e) {
-            let userData = getUserData()
-            pushFormDataToArray(userData);
-            clearFormData();
-            let container = document.querySelector('#userTaskContainer')
-            container.removeChild(container.lastElementChild)
-            addAddTaskToDocument('userTaskContainer')
-            console.log(taskArray)
+            if (userDescriptionArea.value != ""){
+                let userData = getUserData()
+                pushFormDataToArray(userData);
+                addItemsToHashMap(projectName.value)
+                clearFormData();
+                refreshTaskContainer(taskArray);
+                refreshProjectsPanel();
+            }
+            else {
+                userDescriptionArea.setAttribute('placeholder', "Must include a description")
+                userDescriptionArea.setAttribute('class', 'noDescription')
+            }
         }
 
         cancel.addEventListener('click', clickCancel)
@@ -147,8 +332,29 @@ let toDoList = (() => {
         container.appendChild(form.addTaskButton)
     }
 
-    addAddTaskToDocument('userTaskContainer')
-        
-    return {taskFactoryFunc, taskArray}
-})();
 
+
+    // only for demo load-up
+    // Demo Array input
+    
+    const demo = () => {
+        let task = taskFactoryFunc("Meal Prep", "9/14/2020", "Chores","", "yes")
+        addItemsToHashMap("Chores")
+        let task2 = taskFactoryFunc("Wash dishes", '9/15/2020', 'Chores', "", "yes")
+        addItemsToHashMap("Chores")
+        let task3 = taskFactoryFunc("Exercise", '9/13/2020', 'Fitness', "", "yes")
+        addItemsToHashMap("Fitness")
+
+        taskArray.push(task);
+        taskArray.push(task2);
+        taskArray.push(task3)
+        refreshTaskContainer(taskArray);
+        genereateProjectTabsFromHashMap();
+    }
+    
+    window.onload = demo();
+
+    
+
+    return {taskFactoryFunc, projectHashMap}
+})();
