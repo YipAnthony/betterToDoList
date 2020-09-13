@@ -48,10 +48,40 @@ div {
     margin: 10px 0px 10px 20px;
 }
 
+#sidebarContentContainer #sidebarProjectsTab #sidebarUserProjects
+.userProject {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#sidebarContentContainer #sidebarProjectsTab #sidebarUserProjects
+.userProject .projectName {
+    margin-left: 0;
+    pointer-events: none;
+}
+
+#sidebarContentContainer #sidebarProjectsTab #sidebarUserProjects
+.taskNumberContainer {
+    width: 21px;    
+    background-color: var(--primary-accent);
+    border-radius: 50%;
+    pointer-events: none;
+}
+#sidebarContentContainer #sidebarProjectsTab #sidebarUserProjects
+.taskNumberContainer .taskNumber {
+    margin: auto;
+    position: relative;
+    top: 2px;
+    right: 1px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 100%;
+}
+
 #sidebarContentContainer #sidebarHomeTab:hover,
 #sidebarContentContainer #sidebarCalendarTab:hover,
 #sidebarContentContainer #sidebarProjectsTab #sidebarUserProjects
-div:hover {
+.userProject:hover {
     background-color: var(--primary-light-shade);
     cursor: pointer;
 } 
@@ -88,14 +118,22 @@ div:hover {
     margin: 50px auto;
     display: grid;
     grid-template-rows: 50px auto;
+    grid-template-columns: 1fr;
 }
 
-#projectContainer #diplaySection #taskDisplayContainer #topRowTitle {
+#projectContainer #diplaySection #taskDisplayContainer #topRowTitle,
+#dueDateTitle {
     grid-row: 1/2;
+    grid-column: 1/2;
     font-size: 22px;
     font-weight: bold;
     line-height: 100%;
     margin: auto 10px auto;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer #dueDateTitle {
+    font-size: 16px;
+    text-align: right;
 }
 
 #projectContainer #diplaySection #taskDisplayContainer 
@@ -122,12 +160,81 @@ div:hover {
     opacity: .5;
 }
 
+
 #projectContainer #diplaySection #taskDisplayContainer 
-#userTaskContainer .userTask .taskDescription{
+#userTaskContainer .userTask
+.taskDescription,
+.taskDueDate,
+.emptyCheckBox,
+.checkedBox,
+.deleteIcon {
     grid-row: 1/2;
     grid-column: 1/2;
     line-height: 100%;
     margin: auto 10px auto;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask .deleteIcon {
+    opacity: 0;
+    transition-duration: .3s;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask:hover .deleteIcon {
+    opacity: .3;
+    transition-duration: .1s;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask:hover .deleteIcon:hover {
+    opacity: .6;
+    transform: scale(1.1);
+    cursor: pointer;
+    transition-duration: .1s;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask
+.emptyCheckBox,
+.checkedBox,
+.deleteIcon
+ {
+    width: 15px;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask 
+.emptyCheckBox,
+.checkedBox {
+    margin-left: 10px;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask .taskDescription {
+    margin-left: 35px;
+}
+
+.emptyCheckBox, .checkedBox {
+    opacity: .6;
+    cursor: pointer;
+}
+.emptyCheckBox:hover, .checkedBox:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask .taskDueDate{
+    text-align: right;
+    font-size: 14px;
+    margin-right: 35px;
+}
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer .userTask .deleteIcon {
+    position: relative;
+    left: 770px
 }
 
 #projectContainer #diplaySection #taskDisplayContainer 
@@ -138,7 +245,17 @@ div:hover {
     margin: auto 40px auto;
 }
 
+#projectContainer #diplaySection #taskDisplayContainer
+.checked {
+    opacity: .3;
+}
 
+
+#projectContainer #diplaySection #taskDisplayContainer
+.checked .taskDescription, 
+.checked .taskDueDate{
+    text-decoration: line-through;
+}
 
 #projectContainer #diplaySection #taskDisplayContainer 
 #userTaskContainer .addTaskButton img {
@@ -185,6 +302,12 @@ div:hover {
     outline: none;  
     resize: none;
 } 
+
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer #addTaskTopBox .noDescription::placeholder {
+    color: red;
+    opacity: .55
+}
 
 #projectContainer #diplaySection #taskDisplayContainer 
 #userTaskContainer #addTaskTopBox #dueDate, #inputProject {
