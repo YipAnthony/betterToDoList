@@ -1,4 +1,4 @@
-# betterToDoList
+# A Better To-Do List
 Task organizer modeled after the Todoist UI. 
 
 ## Instructions
@@ -25,5 +25,7 @@ The side panel allows quick access to various task categories:
 
 ## Personal Notes
 Project Start: 9/10/2020
-
 For this project, I'm trying a new strategy of taken time to plan things out before coding. Hopefully I can integrate modular patterns, modules, and SOLID principles. 
+
+Project end: 9/13/2020
+The project helped reinforce several JS topics: modular patterns, factory functions, IIFEs, single responsibility principle. 
