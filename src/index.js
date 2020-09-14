@@ -1,6 +1,32 @@
-import {isToday, toDate, isThisWeek} from 'date-fns'
+import {isToday, toDate, isThisWeek, isBefore, endOfToday} from 'date-fns'
 
 let toDoList = (() => {
+
+    let toggleMenu = document.querySelector('#sidebarToggleMenu')
+    toggleMenu.addEventListener('click', toggleSideBar)
+    function toggleSideBar() {
+        let sidebar = document.querySelector('#sidebar')
+        if (toggleMenu.classList.contains('unclicked')) {
+            toggleMenu.classList.remove('unclicked')
+            toggleMenu.classList.add('clicked')
+            sidebar.style.left = "0"
+
+            window.addEventListener('click', closeMenu)
+            console.log('test')
+            function closeMenu(e) {
+                if (!e.target.id.includes('sidebar')){
+                    toggleMenu.classList.add('unclicked')
+                    toggleMenu.classList.remove('clicked')
+                    sidebar.style.left = "-300px"
+                }
+            }
+        }
+        else {
+            toggleMenu.classList.add('unclicked')
+            toggleMenu.classList.remove('clicked')
+            sidebar.style.left = "-300px"
+        }
+    }
 
     const taskFactoryFunc = (description, dueDate, project, completion, filter) => {
         return {description, dueDate, project, completion, filter};
@@ -31,6 +57,38 @@ let toDoList = (() => {
             projectHashMap.delete(projectName)
         }
     }
+
+    const dueDateTitle = document.querySelector('#dueDateTitle')
+    dueDateTitle.setAttribute('class', 'descending')
+    dueDateTitle.addEventListener('click', toggleDateSort)
+    function toggleDateSort() {
+        let dateFilter;
+        let arrow = document.querySelector('#dateArrowToggle')
+        if (dueDateTitle.classList.contains('descending')) {
+            dueDateTitle.classList.remove('descending')
+            dueDateTitle.classList.add('ascending')
+            dateFilter = taskArray.sort(
+                function(a,b) {
+                    if (isBefore(toDate(new Date(a.dueDate)),toDate(new Date(b.dueDate)))) return 1;
+                    else return -1;
+                }
+            )
+            arrow.style.transform = "rotate(180deg)"
+        } else if (dueDateTitle.classList.contains('ascending')) {
+            dueDateTitle.classList.add('descending')
+            dueDateTitle.classList.remove('ascending')
+            dateFilter = taskArray.sort(
+                function(a,b) {
+                    if (!isBefore(toDate(new Date(a.dueDate)),toDate(new Date(b.dueDate)))) return 1;
+                    else return -1;
+                }
+            )
+            arrow.style.transform = "rotate(0deg)"
+        }
+        refreshTaskContainer(dateFilter)
+    }
+    
+    
 
     const filteredArray = (targetProject) => {
         if (targetProject == "sidebarHomeTab") {
@@ -157,7 +215,7 @@ let toDoList = (() => {
         genereateProjectTabsFromHashMap();
     }
 
-    let generateTask = (taskDetails, dueDate) => {
+    let generateTask = (taskDetails, dueDate, completionStatus) => {
         const userTask = document.createElement('li')
         userTask.setAttribute('class', "userTask")
 
@@ -168,6 +226,10 @@ let toDoList = (() => {
         const taskDueDate = document.createElement('div')
         taskDueDate.setAttribute('class', 'taskDueDate')
         taskDueDate.innerHTML = dueDate
+        let formattedDate = toDate(new Date(dueDate))
+        if (isBefore(formattedDate, endOfToday())) {
+            taskDueDate.style.color = "red"
+        }
 
         const emptyBox = document.createElement('img')
         emptyBox.src = "images/checkboxEmpty.svg"
@@ -177,14 +239,26 @@ let toDoList = (() => {
         checkedBox.src = "images/checkbox.svg"
         checkedBox.setAttribute('class', 'checkedBox')
 
+        const editIcon = document.createElement('img')
+        editIcon.src = "images/edit.svg"
+        editIcon.setAttribute('class', 'editIcon')
+
         const deleteIcon = document.createElement('img')
         deleteIcon.src = "images/delete.svg"
         deleteIcon.setAttribute('class', 'deleteIcon')
 
-        
-        userTask.appendChild(emptyBox)
+        if (completionStatus == "complete") {
+            userTask.appendChild(checkedBox)
+            userTask.classList.add('checked')
+        } else if (completionStatus == "") {
+            userTask.appendChild(emptyBox)
+        }
+        // userTask.appendChild(emptyBox)
+
+
         userTask.appendChild(taskDescription)
         userTask.appendChild(taskDueDate)
+        userTask.appendChild(editIcon)
         userTask.appendChild(deleteIcon)
 
         const toggleCheckbox = (e) => {
@@ -192,11 +266,13 @@ let toDoList = (() => {
                 userTask.removeChild(emptyBox)
                 userTask.insertBefore(checkedBox, taskDescription)
                 userTask.classList.add('checked')
+                taskArray[userTask.id].completion = "complete"
             }
             else if (e.target == checkedBox) {
                 userTask.removeChild(checkedBox)
                 userTask.insertBefore(emptyBox, taskDescription)
                 userTask.classList.remove('checked')
+                taskArray[userTask.id].completion = ""
             }
         }
         emptyBox.addEventListener('click', toggleCheckbox)
@@ -213,7 +289,28 @@ let toDoList = (() => {
             refreshProjectsPanel();
         }
         deleteIcon.addEventListener('click', deleteTask)
-            
+
+        const editTask = () => {
+            // userTask = createInputForm().addTaskFormContainer
+            let container = document.querySelector('#userTaskContainer')
+            let form = createInputForm(
+                taskArray[userTask.id].description, 
+                taskArray[userTask.id].dueDate, 
+                taskArray[userTask.id].project,
+                userTask.id
+            ).addTaskFormContainer;
+            form.setAttribute('class', "editing")
+            container.insertBefore(form, userTask)
+            container.removeChild(userTask)
+            $('#dueDate').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                todayHighlight: true
+            });
+
+        }
+        editIcon.addEventListener('click', editTask)
+
         return {
             userTask,
             
@@ -234,7 +331,7 @@ let toDoList = (() => {
     let generateArray = (array) => {
         for (let i = 0; i < array.length; i++) {
             if (array[i].description != "" && array[i].filter == "yes"){
-                let task = generateTask(array[i].description, array[i].dueDate).userTask
+                let task = generateTask(array[i].description, array[i].dueDate, array[i].completion).userTask
                 task.setAttribute('id', `${i}`)
                 appendTask(task);
             }
@@ -248,7 +345,11 @@ let toDoList = (() => {
         addAddTaskToDocument('userTaskContainer');
     }
     //Function to create task form
-    let createInputForm = () => {
+    let createInputForm = (loadDescription, loadDueDate, loadProjectName, loadArrayIndex) => {
+        let arrayIndex
+        if (loadArrayIndex) {
+            arrayIndex = loadArrayIndex
+        } 
         const addTaskFormContainer = document.createElement('form')
         addTaskFormContainer.setAttribute('id', 'addTaskFormContainer')
     
@@ -259,6 +360,7 @@ let toDoList = (() => {
         userDescriptionArea.setAttribute('name', "message")
         userDescriptionArea.setAttribute('placeholder', "e.g. fold laundry at 4pm")
         userDescriptionArea.setAttribute('required', 'true')
+        if (loadDescription) userDescriptionArea.value = loadDescription
     
         const datePicker = document.createElement('input')
         datePicker.setAttribute('type', 'text')
@@ -266,6 +368,7 @@ let toDoList = (() => {
         datePicker.setAttribute('placeholder', 'Due Date')
         datePicker.setAttribute('autocomplete', 'off')
         datePicker.setAttribute('class', 'form-control')
+        if (loadDueDate) datePicker.value = loadDueDate
     
         const projectName = document.createElement('input')
         projectName.setAttribute('type', 'text')
@@ -273,6 +376,7 @@ let toDoList = (() => {
         projectName.setAttribute('placeholder', 'Project Name')
         projectName.setAttribute('autocomplete', 'off')
         projectName.setAttribute('class', 'form-control')
+        if (loadProjectName) projectName.value = loadProjectName
     
         addTaskTopBox.appendChild(userDescriptionArea)
         addTaskTopBox.appendChild(datePicker)
@@ -323,7 +427,15 @@ let toDoList = (() => {
         
         checkmark.addEventListener('click', clickSubmit)
         function clickSubmit(e) {
-            if (userDescriptionArea.value != ""){
+            if (addTaskFormContainer.classList.contains('editing')){
+                taskArray[arrayIndex].description = userDescriptionArea.value;
+                console.log (userDescriptionArea.value)
+                taskArray[arrayIndex].dueDate = datePicker.value;
+                taskArray[arrayIndex].project = projectName.value;
+                refreshTaskContainer(taskArray);
+                refreshProjectsPanel();
+            }
+            else if (userDescriptionArea.value != ""){
                 let userData = getUserData()
                 pushFormDataToArray(userData);
                 addItemsToHashMap(projectName.value)
@@ -339,9 +451,8 @@ let toDoList = (() => {
 
         cancel.addEventListener('click', clickCancel)
         function clickCancel() {
-            let container = document.querySelector('#userTaskContainer')
-            container.removeChild(container.lastElementChild)
-            addAddTaskToDocument('userTaskContainer')
+            refreshTaskContainer(taskArray);
+            refreshProjectsPanel();
         }
         return {
             addTaskFormContainer,
