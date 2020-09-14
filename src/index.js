@@ -302,6 +302,7 @@ let toDoList = (() => {
             form.setAttribute('class', "editing")
             container.insertBefore(form, userTask)
             container.removeChild(userTask)
+            removeItemsToHashMap(taskArray[userTask.id].project)
             $('#dueDate').datepicker({
                 todayBtn: "linked",
                 keyboardNavigation: false,
@@ -347,6 +348,8 @@ let toDoList = (() => {
     //Function to create task form
     let createInputForm = (loadDescription, loadDueDate, loadProjectName, loadArrayIndex) => {
         let arrayIndex
+        let topRowTitle = document.querySelector('#topRowTitle')
+        topRowTitle = topRowTitle.innerHTML
         if (loadArrayIndex) {
             arrayIndex = loadArrayIndex
         } 
@@ -377,6 +380,10 @@ let toDoList = (() => {
         projectName.setAttribute('autocomplete', 'off')
         projectName.setAttribute('class', 'form-control')
         if (loadProjectName) projectName.value = loadProjectName
+        if (topRowTitle != "Home") {
+            console.log(topRowTitle)
+            projectName.value = topRowTitle
+        }
     
         addTaskTopBox.appendChild(userDescriptionArea)
         addTaskTopBox.appendChild(datePicker)
@@ -432,6 +439,7 @@ let toDoList = (() => {
                 console.log (userDescriptionArea.value)
                 taskArray[arrayIndex].dueDate = datePicker.value;
                 taskArray[arrayIndex].project = projectName.value;
+                addItemsToHashMap(projectName.value)
                 refreshTaskContainer(taskArray);
                 refreshProjectsPanel();
             }
@@ -451,6 +459,9 @@ let toDoList = (() => {
 
         cancel.addEventListener('click', clickCancel)
         function clickCancel() {
+            if (addTaskFormContainer.classList.contains('editing')){
+                addItemsToHashMap(projectName.value)
+            }
             refreshTaskContainer(taskArray);
             refreshProjectsPanel();
         }
@@ -487,7 +498,6 @@ let toDoList = (() => {
                 todayHighlight: true
             });
         }
-
         return {
             addTaskButton,
         }
@@ -505,8 +515,6 @@ let toDoList = (() => {
         let form = createAddTask();
         container.appendChild(form.addTaskButton)
     }
-
-
 
     // only for demo load-up
     // Demo Array input
@@ -559,7 +567,6 @@ let toDoList = (() => {
         refreshTaskContainer(taskArray);
         genereateProjectTabsFromHashMap();
     }
-    
     window.onload = demo();
 
     return {taskFactoryFunc, projectHashMap}
