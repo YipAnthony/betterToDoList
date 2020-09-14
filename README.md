@@ -1,5 +1,6 @@
 # A Better To-Do List
 Task organizer modeled after the Todoist UI. 
+
 [Link](https://themddropout.github.io/betterToDoList/)
 
 ## Instructions
