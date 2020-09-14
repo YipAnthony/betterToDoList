@@ -307,6 +307,7 @@ let toDoList = (() => {
                 format: "m/dd/yyyy",
                 todayBtn: "linked",
                 keyboardNavigation: false,
+                autoclose: true,
                 todayHighlight: true
             });
 
@@ -497,6 +498,7 @@ let toDoList = (() => {
                 format: "m/dd/yyyy",
                 todayBtn: "linked",
                 keyboardNavigation: false,
+                autoclose: true,
                 todayHighlight: true
             });
         }
