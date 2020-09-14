@@ -304,6 +304,7 @@ let toDoList = (() => {
             container.removeChild(userTask)
             removeItemsToHashMap(taskArray[userTask.id].project)
             $('#dueDate').datepicker({
+                format: "m/dd/yyyy",
                 todayBtn: "linked",
                 keyboardNavigation: false,
                 todayHighlight: true
@@ -493,6 +494,7 @@ let toDoList = (() => {
             
             //activate bootstrap datepicker once form is created
             $('#dueDate').datepicker({
+                format: "m/dd/yyyy",
                 todayBtn: "linked",
                 keyboardNavigation: false,
                 todayHighlight: true
