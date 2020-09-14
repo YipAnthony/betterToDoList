@@ -1,4 +1,4 @@
-import {isToday, toDate, isThisWeek, isBefore, endOfToday} from 'date-fns'
+import {isToday, toDate, isThisWeek, isBefore, endOfToday, add, format} from 'date-fns'
 
 let toDoList = (() => {
 
@@ -510,25 +510,57 @@ let toDoList = (() => {
 
     // only for demo load-up
     // Demo Array input
-    
     const demo = () => {
-        let task = taskFactoryFunc("Meal Prep", "9/14/2020", "Chores","", "yes")
+        function todayPlus(daysToAdd) {
+            return format(add(endOfToday(), {days: daysToAdd}), 'M/dd/yyyy')
+        } 
+        taskArray.push(taskFactoryFunc("Meal Prep", todayPlus(1) , "Chores","", "yes"))
         addItemsToHashMap("Chores")
-        let task2 = taskFactoryFunc("Wash dishes", '9/15/2020', 'Chores', "", "yes")
+        taskArray.push(taskFactoryFunc("Laundry", todayPlus(0), 'Chores', "complete", "yes"))
         addItemsToHashMap("Chores")
-        let task3 = taskFactoryFunc("Exercise", '9/13/2020', 'Fitness', "", "yes")
-        addItemsToHashMap("Fitness")
+        taskArray.push(taskFactoryFunc("Wash dishes", todayPlus(2), 'Chores', "", "yes"))
+        addItemsToHashMap("Chores")
+        taskArray.push(taskFactoryFunc("Take out the trash", todayPlus(2), 'Chores', "", "yes"))
+        addItemsToHashMap("Chores")
+        taskArray.push(taskFactoryFunc("Push Day", todayPlus(0), 'Workout', "complete", "yes"))
+        addItemsToHashMap("Workout")
+        taskArray.push(taskFactoryFunc("Pull Day", todayPlus(1), 'Workout', "", "yes"))
+        addItemsToHashMap("Workout")
+        taskArray.push(taskFactoryFunc("Leg Day", todayPlus(2), 'Workout', "", "yes"))
+        addItemsToHashMap("Workout")
+        taskArray.push(taskFactoryFunc("Cardio", todayPlus(3), 'Workout', "", "yes"))
+        addItemsToHashMap("Workout")
+        taskArray.push(taskFactoryFunc("Create function: edit tasks", todayPlus(0), 'Current project', "complete", "yes"))
+        addItemsToHashMap("Current project")
+        taskArray.push(taskFactoryFunc("Add media queries", todayPlus(0), 'Current project', "complete", "yes"))
+        addItemsToHashMap("Current project")
+        taskArray.push(taskFactoryFunc("Create function: sort by due date", todayPlus(0), 'Current project', "complete", "yes"))
+        addItemsToHashMap("Current project")
+        taskArray.push(taskFactoryFunc("Sidebar: filter by project name", todayPlus(0), 'Current project', "complete", "yes"))
+        addItemsToHashMap("Current project")
+        taskArray.push(taskFactoryFunc("Review factory functions", todayPlus(1), 'Coding', "complete", "yes"))
+        addItemsToHashMap("Coding")
+        taskArray.push(taskFactoryFunc("Review modular patterns", todayPlus(0), 'Coding', "complete", "yes"))
+        addItemsToHashMap("Coding")
+        taskArray.push(taskFactoryFunc("factory functions vs constructors", todayPlus(1), 'Coding', "", "yes"))
+        addItemsToHashMap("Coding")
+        taskArray.push(taskFactoryFunc("Daily codewars", todayPlus(0), 'Coding', "complete", "yes"))
+        addItemsToHashMap("Coding")
+        taskArray.push(taskFactoryFunc("Review git rebasing", todayPlus(1), 'Coding', "", "yes"))
+        addItemsToHashMap("Coding")
+        taskArray.push(taskFactoryFunc("How to write a README", todayPlus(1), 'Coding', "", "yes"))
+        addItemsToHashMap("Coding")
+        taskArray.push(taskFactoryFunc("Daily Hangboard", todayPlus(0), 'Climbing', "", "yes"))
+        addItemsToHashMap("Climbing")
 
-        taskArray.push(task);
-        taskArray.push(task2);
-        taskArray.push(task3)
+    
+       
+
         refreshTaskContainer(taskArray);
         genereateProjectTabsFromHashMap();
     }
     
     window.onload = demo();
-
-    
 
     return {taskFactoryFunc, projectHashMap}
 })();
