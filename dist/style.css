@@ -16,6 +16,22 @@ body li{
     list-style-type: none;
 }
 
+#whenSignedOut, #whenSignedIn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100px;
+}
+
+#sync {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100px;
+}
+
 #sidebarToggleMenu {
     position: relative;
     width: 20px;
@@ -277,6 +293,7 @@ div {
 #projectContainer #diplaySection #taskDisplayContainer 
 #userTaskContainer .userTask .taskDescription {
     margin-left: 35px;
+    cursor: pointer;
 }
 
 .emptyCheckBox, .checkedBox {
@@ -343,7 +360,7 @@ div {
 
 #projectContainer #diplaySection #taskDisplayContainer 
 #userTaskContainer #addTaskFormContainer {
-    min-height: 165px;
+    height: 210px;
     width: 100%;
 }
 
@@ -355,13 +372,26 @@ div {
     border-radius: 10px;
     border: var(--primary-accent) solid 1px;
     display: grid;
-    grid-template-rows: auto 40px;
+    grid-template-rows: 30px 80px 40px;
     grid-template-columns: 110px auto ;
 } 
 
 #projectContainer #diplaySection #taskDisplayContainer 
-#userTaskContainer #addTaskTopBox textarea{
+#userTaskContainer #addTaskTopBox #descriptionArea{
     grid-row: 1/2;
+    grid-column: 1/3;
+    min-height: 65px;
+    width: 95%;
+    padding: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: transparent;
+    border: none;
+    outline: none;  
+    resize: none;
+} 
+#projectContainer #diplaySection #taskDisplayContainer 
+#userTaskContainer #addTaskTopBox #detailsArea{
+    grid-row: 2/3;
     grid-column: 1/3;
     min-height: 65px;
     width: 95%;
@@ -381,7 +411,7 @@ div {
 
 #projectContainer #diplaySection #taskDisplayContainer 
 #userTaskContainer #addTaskTopBox #dueDate, #inputProject {
-    grid-row: 2/3;
+    grid-row: 3/4;
     width: 100px;
     height: 30px;
     margin:auto;
@@ -424,6 +454,84 @@ div {
     cursor: pointer;
     transition-duration: .3s;
 }
+
+#mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* width: 100%;
+    height: 100%; */
+    background-color: white;
+    opacity: .7;
+    z-index: 9;
+}
+
+#centerer {
+    position: fixed;
+    top: 30%;
+    right: 0;
+    /* bottom: 0; */
+    height: auto;
+    z-index: 10;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    /* background-color: black; */
+}
+
+.taskPopUpContainer {
+    position: relative;
+    padding: 0px 0 10px 20px;
+    width: 50vw;
+    z-index: 10;
+    height: auto;
+    /* top: 30%;
+    left: 35vw; */
+    display: grid;
+    grid-template-columns: auto auto 30px;
+    grid-template-rows: auto auto auto auto ;
+    border-radius: 10px;
+    background-color: white;
+    border: var(--primary-accent) 1px solid;
+}
+.taskPopUpTopBar {
+    font-size: 25px;
+    /* margin-bottom: 50px; */
+    grid-row: 1/2;
+    grid-column: 1/3;
+    display: flex;
+    font-weight: bold;
+}
+
+.taskPopUpTitle {
+    margin: 5px 0;
+}
+
+.taskPopUpDueDate{
+    grid-row: 2/3;
+    grid-column: 1/3;
+}
+.taskPopUpProject {
+    grid-row: 3/4;
+    grid-column: 1/3;
+}
+
+.taskPopUpDetails {
+    grid-row: 4/5;
+    grid-column: 1/3;
+}
+
+#closePop {
+    grid-row: 1/2;
+    grid-column: 3/4;
+    width: 20px;
+    margin: 5px auto;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
 @media (max-width: 1100px) {
     #projectContainer #diplaySection #taskDisplayContainer {
         width: 500px;
@@ -441,6 +549,11 @@ div {
         left: 0;
         margin-left: 20px;
         cursor: pointer;
+    }
+
+    
+    .taskPopUpTitle {
+        font-size: 20px;
     }
     
     #projectContainer #topbar #projTitle {
