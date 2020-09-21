@@ -242,7 +242,7 @@ let toDoList =() => {
             taskArray = [...doc.data().userTaskArray]
             console.log(taskArray)
             refreshTaskContainer(taskArray)
-            initialHashMapSync ()
+            initialHashMapSync ();
             refreshProjectsPanel();
           })
         }
