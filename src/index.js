@@ -402,7 +402,7 @@ let toDoList =() => {
     filterWeekTasks();
     refreshTaskContainer(taskArray);
     let tabTitle = document.querySelector("#topRowTitle");
-    tabTitle.innerHTML = "Today";
+    tabTitle.innerHTML = "Week";
   }
 
   let todayTab = document.querySelector("#sidebarCalendarTab");
