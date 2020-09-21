@@ -56,14 +56,7 @@ auth.onAuthStateChanged( (user) => {
 const database = firebase.firestore();
 
 
-//reference document for firestore, this will happen when we are subscribed 
-let thingsRef
-//unsubscribe, this will turn off the realtime stream
-let unsubscribe
-
-
 let signInProcess = () => {
-
   signup.createSignInContainer();
 
   let demoButton = signup.signInWithDemoButton;
@@ -108,10 +101,7 @@ let signInProcess = () => {
 
   
   var actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be whitelisted in the Firebase Console.
-    url: 'http://localhost:5000',
-    // This must be true.
+    url: 'https://themddropout.github.io/betterToDoList/',
     handleCodeInApp: true
   };
   
@@ -148,26 +138,20 @@ let signInProcess = () => {
             console.log('it works!')
           })
           .catch(function(error) {
-            // Handle Errors here.
             emailInput.value = ""
             passwordInputArea.value = ""
             emailInput.setAttribute('placeholder', "Invalid email")
             var errorCode = error.code;
             var errorMessage = error.message;
-            // ...
           });
         }
       }
-      // email = prompt("what is your email?")
     
     }
   
-  // Confirm the link is a sign-in with email link.
   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
     var email = window.localStorage.getItem('emailForSignIn');
     if (!email) {
-      // User opened the link on a different device. To prevent session fixation
-      // attacks, ask the user to provide the associated email again. For example:
       signup.createSignInContainer();
       signup.reconfirmEmail();
       let emailArea = signup.emailInputArea
@@ -198,29 +182,17 @@ let signInProcess = () => {
         let body = document.querySelector('body')
         let signInContainer = signup.signInContainer
         body.removeChild(signInContainer)
-        // You can access the new user via result.user
-        // Additional user info profile not available via:
-        // result.additionalUserInfo.profile == null
-        // You can check if the user is new or existing:
-        // result.additionalUserInfo.isNewUser
       })
       .catch(function(error) {
         let emailArea = signup.emailInputArea
         emailArea.value = ""
         emailArea.setAttribute('placeholder', "Invalid Email")
       });
-    }
-    
-      
-      
+    }  
   }
-  
 }
 
-
-
 let toDoList =() => {
-
   let toggleMenu = document.querySelector("#sidebarToggleMenu");
   toggleMenu.addEventListener("click", toggleSideBar);
   function toggleSideBar() {
@@ -259,9 +231,7 @@ let toDoList =() => {
   let taskArray = [];
 
   const projectHashMap = new Map();
-  const testArray = []
 
-  //demo input
   let onStartDemoCondition = (() => {
     auth.onAuthStateChanged( user => {      
       if (user) {
@@ -893,148 +863,6 @@ let toDoList =() => {
     container.appendChild(form.addTaskButton);
   };
   refreshTaskContainer(taskArray)
-  // only for demo load-up
-  // Demo Array input
-  // { description, dueDate, project, completion, filter, details}
-  // const demo = () => {
-  //   function todayPlus(daysToAdd) {
-  //     return format(add(endOfToday(), { days: daysToAdd }), "M/dd/yyyy");
-  //   }
-  //   taskArray.push(
-  //     taskFactoryFunc("Meal Prep", todayPlus(1), "Chores", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Chores");
-  //   taskArray.push(
-  //     taskFactoryFunc("Laundry", todayPlus(0), "Chores", "complete", "yes", "")
-  //   );
-  //   addItemsToHashMap("Chores");
-  //   taskArray.push(
-  //     taskFactoryFunc("Wash dishes", todayPlus(2), "Chores", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Chores");
-  //   taskArray.push(
-  //     taskFactoryFunc("Take out the trash", todayPlus(2), "Chores", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Chores");
-  //   taskArray.push(
-  //     taskFactoryFunc("Push Day", todayPlus(0), "Workout", "complete", "yes", "")
-  //   );
-  //   addItemsToHashMap("Workout");
-  //   taskArray.push(
-  //     taskFactoryFunc("Pull Day", todayPlus(1), "Workout", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Workout");
-  //   taskArray.push(
-  //     taskFactoryFunc("Leg Day", todayPlus(2), "Workout", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Workout");
-  //   taskArray.push(
-  //     taskFactoryFunc("Cardio", todayPlus(3), "Workout", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Workout");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "Create function: edit tasks",
-  //       todayPlus(0),
-  //       "Current project",
-  //       "complete",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Current project");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "Add media queries",
-  //       todayPlus(0),
-  //       "Current project",
-  //       "complete",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Current project");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "Create function: sort by due date",
-  //       todayPlus(0),
-  //       "Current project",
-  //       "complete",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Current project");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "Sidebar: filter by project name",
-  //       todayPlus(0),
-  //       "Current project",
-  //       "complete",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Current project");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "Review factory functions",
-  //       todayPlus(1),
-  //       "Coding",
-  //       "complete",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Coding");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "Review modular patterns",
-  //       todayPlus(0),
-  //       "Coding",
-  //       "complete",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Coding");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "factory functions vs constructors",
-  //       todayPlus(1),
-  //       "Coding",
-  //       "",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Coding");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "Daily codewars",
-  //       todayPlus(0),
-  //       "Coding",
-  //       "complete",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Coding");
-  //   taskArray.push(
-  //     taskFactoryFunc("Review git rebasing", todayPlus(1), "Coding", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Coding");
-  //   taskArray.push(
-  //     taskFactoryFunc(
-  //       "How to write a README",
-  //       todayPlus(1),
-  //       "Coding",
-  //       "",
-  //       "yes", ""
-  //     )
-  //   );
-  //   addItemsToHashMap("Coding");
-  //   taskArray.push(
-  //     taskFactoryFunc("Daily Hangboard", todayPlus(0), "Climbing", "", "yes", "")
-  //   );
-  //   addItemsToHashMap("Climbing");
-
-  //   refreshTaskContainer(taskArray);
-  //   genereateProjectTabsFromHashMap();
-  // };
-  // window.onload = demo();
-
+  
   return { taskFactoryFunc, projectHashMap };
 };

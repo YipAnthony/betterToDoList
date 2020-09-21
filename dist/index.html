@@ -9,18 +9,12 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="signin.css">
     <title>Document</title>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
 
     <script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     var firebaseConfig = {
         apiKey: "AIzaSyDE1GJRJaJf2m66q3V7b-3yMlQeRt31b_E",
         authDomain: "test-to-do-list-688f4.firebaseapp.com",
@@ -35,7 +29,6 @@
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
     </script>
-    <!-- <script src='app.js' defer></script> -->
 </head>
 <body>
     <div id="hiddenContainer" hidden>
@@ -86,7 +79,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="bootstrap-datepicker.js"></script>
     <script src="main.js"></script>
-    <!-- <script src="signin.js" type="module"></script> -->
     <script>
         $('#dueDate').datepicker({
             format: "m/dd/yyyy",
