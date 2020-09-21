@@ -17,19 +17,39 @@ body li{
 }
 
 #whenSignedOut, #whenSignedIn {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200px;
-    height: 100px;
-}
-
-#sync {
-    position: absolute;
+    position: relative;
     top: 0;
     right: 0;
-    width: 200px;
-    height: 100px;
+    width: auto;
+    height: 100%;
+    display: flex;
+}
+
+#userDetails {
+    width: auto;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#signOutButton {
+    height: 80%;
+    margin: auto 20px;
+    width: 100px;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--primary-light-shade);
+    font-weight: bold;
+}
+#signOutButton:hover {
+    transform: scale(1.05);
+    transition-duration: .1s;
+
+}
+
+#topBarLogo {
+    width: 40px;
+    height: 40px;
+    margin: auto 15px;
 }
 
 #sidebarToggleMenu {
@@ -133,8 +153,9 @@ div {
     justify-content: flex-start;
 }
 #projectContainer #topbar #projTitle {
-    margin: auto auto auto 15px;
+    margin: 7px auto auto 0;
     font-size: 25px;
+    font-weight: bold;
     color: white;
     font-family: 'Old Standard TT', serif;
 }

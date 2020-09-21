@@ -38,64 +38,55 @@
     <!-- <script src='app.js' defer></script> -->
 </head>
 <body>
-    <div id="projectContainer">
-        <div id="topbar">
-            <img src="images/menuToggle.svg" id="sidebarToggleMenu" class="unclicked" alt="">
-            <div id="projTitle">
-                To-Do...
-            </div>
-        </div>
-        <div id="sidebar">
-            <div id="sidebarContentContainer">
-                <li id="sidebarHomeTab">Home</li>
-                <li id="sidebarCalendarTab">Today </li>
-                <li id="sidebarWeekTab">Week</li>
-                <li id="sidebarProjectsTab">
-                    <div id="sidebarProjectsTitle">Projects</div>
-                    <div id="sidebarUserProjects">
-                    </div>
-                </li>
+    <div id="hiddenContainer" hidden>
+        <div id="projectContainer">
+            <div id="topbar">
+                <img src="images/menuToggle.svg" id="sidebarToggleMenu" class="unclicked" alt="">
+                <img id='topBarLogo' src="images/croppedLogo.png" alt="">
 
-            </div>
-        </div>
-        <div id="diplaySection">
-            <div id="taskDisplayContainer">
-                <div id="topRowTitle">Home</div>
-                <div id="dueDateTitle">Due Date
-                    <img src="images/arrow.svg" id="dateArrowToggle" alt="">
+                <div id="projTitle">
+                To-Do...
                 </div>
+                <section id="whenSignedIn" >
+                    <div id="userDetails"></div>
+                    <button id="signOutButton">Sign Out</button>
+                </section>
                 
-                <div id="userTaskContainer">
-            
+            </div>
+            <div id="sidebar">
+                <div id="sidebarContentContainer">
+                    <li id="sidebarHomeTab">Home</li>
+                    <li id="sidebarCalendarTab">Today </li>
+                    <li id="sidebarWeekTab">Week</li>
+                    <li id="sidebarProjectsTab">
+                        <div id="sidebarProjectsTitle">Projects</div>
+                        <div id="sidebarUserProjects">
+                        </div>
+                    </li>
+    
+                </div>
+            </div>
+            <div id="diplaySection">
+                <div id="taskDisplayContainer">
+                    <div id="topRowTitle">Home</div>
+                    <div id="dueDateTitle">Due Date
+                        <img src="images/arrow.svg" id="dateArrowToggle" alt="">
+                    </div>
+                    
+                    <div id="userTaskContainer">
+                
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <section id="whenSignedOut">
-    </section>
-
-    <section id="whenSignedIn" >
-        <div id="userDetails"></div>
-        <button id="signOutButton">Sign Out</button>
-        
-    </section>
-    <section id="sync">
-        <button id="sendEmail">SendEmail</button>
-        <button id="syncButton">BackUp & Sync</button>
-        <button id="confirmLink">confirmLink</button>
-        <button id="signinafterconfirmemail">signinafterconfirmemail</button>
-        <button id="signupwithemailpass">signupwithemailpass</button>
-        <button id="signinwithemailpass">signinwithemailpass</button>
-    </section>
-
-
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="bootstrap-datepicker.js"></script>
     <script src="main.js"></script>
-    <script src="signin.js" type="module"></script>
+    <!-- <script src="signin.js" type="module"></script> -->
     <script>
         $('#dueDate').datepicker({
             format: "m/dd/yyyy",
@@ -112,4 +103,7 @@
 
 <!-- Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
 <!-- Icons made by <a href="" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+<!-- Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+<!-- Image by <a href="https://pixabay.com/users/StartupStockPhotos-690514/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=593327">StartupStockPhotos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=593327">Pixabay</a> -->
+<!-- Icons made by <a href="" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
 <!-- Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
