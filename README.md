@@ -31,3 +31,6 @@ For this project, I'm trying a new strategy of taken time to plan things out bef
 
 Project end: 9/13/2020
 The project helped reinforce several JS topics: modular patterns, factory functions, IIFEs, single responsibility principle. 
+
+Project update: 9/20/2020
+Updated project to incorporate Firebase user authentication and Firestore database. Created a sign-in module that I would also be able to re-use for future projects. Using Firebase/Firestore was an interesting change from the normal HTML/CSS/JS projects. 
