@@ -41,7 +41,6 @@ auth.onAuthStateChanged( (user) => {
     hiddenContainer.style.display = "auto"
     hiddenContainer.hidden = false;
     signOutButton.onclick = () => {
-      console.log('signout click')
       auth.signOut();
       location.reload();
     }
@@ -76,9 +75,6 @@ let signInProcess = () => {
     firebase.auth().signInWithEmailAndPassword(email, password)
     .catch(function(error) {
       var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorMessage)
-      console.log(errorCode)
       emailInput.value = ""
       passInput.value = ""
       if (errorCode == 'auth/user-not-found') {
@@ -135,7 +131,6 @@ let signInProcess = () => {
           let password = passwordInputArea.value
           firebase.auth().createUserWithEmailAndPassword(email, password)
           .then(function() {
-            console.log('it works!')
           })
           .catch(function(error) {
             emailInput.value = ""
@@ -158,7 +153,6 @@ let signInProcess = () => {
       let submit = signup.submit
       submit.onclick = () => {
         email = emailArea.value
-        console.log(email)
           firebase.auth().signInWithEmailLink(email, window.location.href)
         .then(function(result) {
           window.localStorage.removeItem('emailForSignIn');
@@ -169,7 +163,6 @@ let signInProcess = () => {
         .catch(function(error) {
           emailArea.value = ""
           emailArea.setAttribute('placeholder', "Invalid Email")
-          console.log('here we are')
         });
       }
       
@@ -177,7 +170,6 @@ let signInProcess = () => {
     if (email) {
       firebase.auth().signInWithEmailLink(email, window.location.href)
       .then(function(result) {
-        console.log('here we are2')
         window.localStorage.removeItem('emailForSignIn');
         let body = document.querySelector('body')
         let signInContainer = signup.signInContainer
@@ -238,9 +230,7 @@ let toDoList =() => {
         if (user.uid == "SDzLU3EAgWOXI25mAkPNM4KslHj2"){
           let thingsRef = database.collection('users').doc('whfH5WOfbwe6ZQfXmEGWgYc2WRj2')
           thingsRef.get().then(function(doc) {
-            console.log(doc.data())
             taskArray = [...doc.data().userTaskArray]
-            console.log(taskArray)
             refreshTaskContainer(taskArray)
             initialHashMapSync ();
             refreshProjectsPanel();
@@ -268,10 +258,6 @@ let toDoList =() => {
         thingsRef.get().then(function(doc) {
           if (doc.exists) {
 
-            console.log('switch')
-            // thingsRef.set({
-            // testArray = [...doc.data()]
-            // })
             thingsRef.set({
               userTaskArray: taskArray
             })
@@ -282,7 +268,6 @@ let toDoList =() => {
           })
         }
       }).catch(function(error) {
-        console.log('Error getting document:', error)
       });
     }})
   }
