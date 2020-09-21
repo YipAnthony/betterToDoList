@@ -699,7 +699,7 @@ let toDoList =() => {
     projectName.setAttribute("autocomplete", "off");
     projectName.setAttribute("class", "form-control");
     if (loadProjectName) projectName.value = loadProjectName;
-    if (topRowTitle != "Home") {
+    if (topRowTitle != "Home" && topRowTitle != "Today" && topRowTitle != "Week") {
       projectName.value = topRowTitle;
     }
 
