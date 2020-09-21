@@ -249,7 +249,8 @@ let toDoList =() => {
         else {
           let thingsRef = database.collection('users').doc(user.uid)
           thingsRef.get().then(function(doc) {
-            if(doc.data().userTaskArray) taskArray = [...doc.data().userTaskArray]
+            if(doc.data()) taskArray = [...doc.data().userTaskArray]
+            else syncWithFirebase ();
             refreshTaskContainer(taskArray)
             initialHashMapSync ();
             refreshProjectsPanel();
